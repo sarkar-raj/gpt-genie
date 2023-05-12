@@ -1,12 +1,8 @@
-
-# Bring in deps
-# need to install chromadb
 import os
+
+# Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
-API_KEY = os.getenv('API_KEY')
-
-# from apikey import apikey 
 
 import streamlit as st 
 from langchain.llms import OpenAI
@@ -15,21 +11,19 @@ from langchain.chains import LLMChain, SequentialChain
 from langchain.memory import ConversationBufferMemory
 from langchain.utilities import WikipediaAPIWrapper 
 
-os.environ['OPENAI_API_KEY'] = API_KEY
-
 # App framework
-st.title('🦜🔗 YouTube GPT Creator')
-prompt = st.text_input('Plug in your prompt here') 
+st.title('GPT article Generator')
+prompt = st.text_input('Enter your prompt here') 
 
 # Prompt templates
 title_template = PromptTemplate(
     input_variables = ['topic'], 
-    template='write me a youtube video title about {topic}'
+    template='write me a blog post title about {topic}'
 )
 
 script_template = PromptTemplate(
     input_variables = ['title', 'wikipedia_research'], 
-    template='write me a youtube video script based on this title TITLE: {title} while leveraging this wikipedia reserch:{wikipedia_research} '
+    template='write me a 500 words blog post based on this title TITLE: {title} while leveraging this wikipedia reserch:{wikipedia_research} '
 )
 
 # Memory 
